@@ -85,7 +85,7 @@ async function addEntry() {
 // ---------------------------------------------------------------------------
 function caffeineAt(entry: Entry, atDate: Date): number {
   const h = (atDate.getTime() - new Date(entry.consumed_at).getTime()) / 3_600_000
-  if (h < 0) return entry.mg
+  if (h < 0) return 0
   return entry.mg * Math.pow(0.5, h / HALF_LIFE_HOURS)
 }
 
