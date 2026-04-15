@@ -2,7 +2,7 @@
 interface Entry {
   id: string
   mg: number
-  time: string
+  consumed_at: string
 }
 
 const props = defineProps<{
@@ -23,7 +23,7 @@ const PW = W - ML - MR
 const PH = H - MT - MB
 
 function caffeineAt(entry: Entry, t: Date): number {
-  const h = (t.getTime() - new Date(entry.time).getTime()) / 3_600_000
+  const h = (t.getTime() - new Date(entry.consumed_at).getTime()) / 3_600_000
   if (h < 0) return entry.mg
   return entry.mg * Math.pow(0.5, h / props.halfLifeHours)
 }
