@@ -36,7 +36,9 @@ function totalAt(t: Date): number {
 const xMin = computed(() => {
   if (!props.entries.length) return props.now.getTime() - 1 * 3_600_000
   const earliest = Math.min(...props.entries.map(e => new Date(e.consumed_at).getTime()))
-  return earliest - 15 * 60_000
+  // Don't go back more than 12h — keeps the chart readable day-to-day
+  const cap = props.now.getTime() - 12 * 3_600_000
+  return Math.max(earliest - 15 * 60_000, cap)
 })
 
 const xMax = computed(() => {

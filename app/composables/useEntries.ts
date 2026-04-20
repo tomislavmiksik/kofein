@@ -29,9 +29,11 @@ export function useEntries() {
     // Then sync from Supabase in the background
     if (client && user.value) {
       loading.value = true
+      const since = new Date(Date.now() - 48 * 3_600_000).toISOString()
       const { data } = await client
         .from('entries')
         .select('*')
+        .gte('consumed_at', since)
         .order('consumed_at', { ascending: false })
       if (data) {
         entries.value = data
